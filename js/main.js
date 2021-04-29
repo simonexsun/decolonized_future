@@ -4,6 +4,9 @@ import { OBJLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/lo
 import { MTLLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/loaders/MTLLoader.js';
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/controls/OrbitControls.js';
 
+const apiEndpoint = "https://api.openweathermap.org/data/2.5",
+  apiKey = "d7238d177a8b8403e96c991b74eb54e1";
+
 function main() {
     const canvas = document.querySelector('#c');
     const renderer = new THREE.WebGLRenderer({ canvas });
@@ -81,4 +84,55 @@ function main() {
     requestAnimationFrame(render);
 }
 
+/**
+ * Makes a query against the weather API.
+ *
+ * @param {string} path - API endpoint path
+ * @param {Object} params - additional params beyond the default
+ */
+async function apiQuery(path, params) {
+  // openweatherAPI wants certain special characters (such as commas) NOT URI
+  // encoded, hence using encodeURI instead of encodeURIComponent.
+  function encodeQueryData(data) {
+    return Object.keys(data).map(k => `${k}=${encodeURI(data[k])}`).join("&");
+  }
+  const defaultParams = {
+    lang: "en",
+    units: "metric",
+    appid: apiKey
+  };
+  const query = encodeQueryData({ ...params, ...defaultParams });
+  let response = await fetch(`${apiEndpoint}/${path}?${query}`);
+  let data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+}
+
+async function getWeathers(){
+    return Promise.all([
+            apiQuery("weather", { q: "beijing, cn" }),
+            apiQuery("weather", { q: "new york, ny, us" }),
+            apiQuery("weather", { q: "los angeles, ca, us" })
+    ]);
+}
+
+async function displayWeather() {
+    //first get the weather
+    try {
+        let [bj, nyc, la] = await getWeathers();
+        // console.log(bj.weather[0].main);
+        updateWeatherUI(bj);
+    } catch (error) {
+        console.log(`got an error: ${error}`);
+    }
+}
+
+function updateWeatherUI(city){
+    document.getElementById("weather").innerHTML = city.weather[0].main;
+}
+
+
 main();
+displayWeather();
