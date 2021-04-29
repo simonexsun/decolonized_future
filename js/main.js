@@ -213,20 +213,20 @@ async function main() {
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
                     backgroundColor = 0x84959c;
-                    spotLight.color.setHex( 0xffffff );
-                    spotLight.intensity = 2;
+                    spotLight3.color.setHex( 0xffffff );
+                    spotLight3.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
                     backgroundColor = 0x5e5e5e;
-                    spotLight.color.setHex( 0xffffff );
-                    spotLight.intensity = 1;
+                    spotLight3.color.setHex( 0xffffff );
+                    spotLight3.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
                     backgroundColor = 0x92b1d6;
-                    spotLight.color.setHex( 0xc7e7ff );
-                    spotLight.intensity = 3;
+                    spotLight3.color.setHex( 0xc7e7ff );
+                    spotLight3.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
                     backgroundColor = 0xb3ad98;
-                    spotLight.color.setHex( 0xffe6c4 );
-                    spotLight.intensity = 2;
+                    spotLight3.color.setHex( 0xffe6c4 );
+                    spotLight3.intensity = 2;
                 }
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
