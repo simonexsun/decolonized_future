@@ -2,6 +2,7 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.128.0';
 import { OBJLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/loaders/MTLLoader.js';
+import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/controls/OrbitControls.js';
 
 const apiEndpoint = "https://api.openweathermap.org/data/2.5",
@@ -33,66 +34,76 @@ async function main() {
     //hemisphere light attributes
     const skyColor = 0xB1E1FF;  // light blue
     const groundColor = 0xB97A20;  // brownish orange
-    const hemisphereIntensity = 0.5;
+    const hemisphereIntensity = 0;
     const hemisphereLight = new THREE.HemisphereLight(skyColor, groundColor, hemisphereIntensity);
     scene.add(hemisphereLight);
 
-    //spot light attributes
-    let lightColor = 0xFFFFFF;
-    let intensity = 2;
-    const distance = 15;
-    const angle = 100;
-    const penumbra = 1; 
+    // //spot light attributes
+    // let lightColor = 0xFFFFFF;
+    // let intensity = 2;
+    // const distance = 15;
+    // const angle = 100;
+    // const penumbra = 1; 
 
-    //spot light over mountain-LA
-    let spotLight = new THREE.SpotLight(lightColor, intensity, distance, angle, penumbra);
-    // let spotLight = new THREE.SpotLight(lightColor, intensity);
-    spotLight.position.set(5, 8, 0);
-    spotLight.target.position.set(0, 5, -1);
-    // spotLight.castShadow = true;
-    scene.add(spotLight);
-    scene.add(spotLight.target);
+    // //spot light over mountain-LA
+    // let spotLight = new THREE.SpotLight(lightColor, intensity, distance, angle, penumbra);
+    // // let spotLight = new THREE.SpotLight(lightColor, intensity);
+    // spotLight.position.set(5, 8, 0);
+    // spotLight.target.position.set(0, 5, -1);
+    // // spotLight.castShadow = true;
+    // scene.add(spotLight);
+    // scene.add(spotLight.target);
 
-    //spot light over farm-BK
-    let spotLight1 = new THREE.SpotLight(lightColor, intensity, distance, angle, penumbra);
-    spotLight1.position.set(5, -6, 0);
-    spotLight1.target.position.set(1, 1, -2);
-    scene.add(spotLight1);
-    scene.add(spotLight1.target);
+    // //spot light over farm-BK
+    // let spotLight1 = new THREE.SpotLight(lightColor, intensity, distance, angle, penumbra);
+    // spotLight1.position.set(5, -6, 0);
+    // spotLight1.target.position.set(1, 1, -2);
+    // scene.add(spotLight1);
+    // scene.add(spotLight1.target);
 
-    //spot light over city-BJ
-    let spotLight2 = new THREE.SpotLight(lightColor, intensity, distance, angle, penumbra);
-    spotLight2.position.set(-4, -6, 7);
-    spotLight2.target.position.set(2, 1, -4);
-    scene.add(spotLight2);
-    scene.add(spotLight2.target);
+    // //spot light over city-BJ
+    // let spotLight2 = new THREE.SpotLight(lightColor, intensity, distance, angle, penumbra);
+    // spotLight2.position.set(-4, -6, 7);
+    // spotLight2.target.position.set(2, 1, -4);
+    // scene.add(spotLight2);
+    // scene.add(spotLight2.target);
 
-    //spot light over ?-LES
-    let spotLight3 = new THREE.SpotLight(lightColor, 3, distance, angle, penumbra);
-    spotLight3.position.set(-10, -5, -3);
-    spotLight3.target.position.set(15, 10, 10);
-    scene.add(spotLight3);
-    scene.add(spotLight3.target);
+    // //spot light over ?-LES
+    // let spotLight3 = new THREE.SpotLight(lightColor, 3, distance, angle, penumbra);
+    // spotLight3.position.set(-10, -5, -3);
+    // spotLight3.target.position.set(15, 10, 10);
+    // scene.add(spotLight3);
+    // scene.add(spotLight3.target);
 
-    //lighting helper
-    // const helper = new THREE.SpotLightHelper(spotLight3);
-    // scene.add(helper);
+    // //lighting helper
+    // // const helper = new THREE.SpotLightHelper(spotLight3);
+    // // scene.add(helper);
 
-    function updateLight() {
-        spotLight3.target.updateMatrixWorld();
-        // helper.update();
-    }
-    updateLight();
+    // function updateLight() {
+    //     spotLight3.target.updateMatrixWorld();
+    //     // helper.update();
+    // }
+    // updateLight();
 
     //load 3D model files
-    const objLoader = new OBJLoader();
-    const mtlLoader = new MTLLoader();
-    mtlLoader.load('src/tetrahedron.mtl', function (materials) {
-        materials.preload();
-        objLoader.setMaterials(materials);
-        objLoader.load('src/tetrahedron.obj', function (object) {
-            scene.add(object);
-        });
+    const objLoader = new GLTFLoader();
+    // const mtlLoader = new MTLLoader();
+    // mtlLoader.load('src/tetrahedron.mtl', function (materials) {
+    //     materials.preload();
+    //     objLoader.setMaterials(materials);
+    //     objLoader.load('src/tetrahedron.obj', function (object) {
+    //         scene.add(object);
+    //     });
+    // });
+    objLoader.load('src/tetrahedron1.gltf', function (object) {
+        scene.add(object.scene);
+        object.animations; // Array<THREE.AnimationClip>
+		object.scene; // THREE.Group
+		object.scenes; // Array<THREE.Group>
+		object.cameras; // Array<THREE.Camera>
+		object.asset; // Object
+    }, undefined, function ( error ) {
+	    console.error( `got an error: ${error}`);
     });
 
     // get weather data
@@ -138,100 +149,100 @@ async function main() {
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
                     backgroundColor = 0x84959c;
-                    spotLight.color.setHex( 0xffffff );
-                    spotLight.intensity = 2;
+                    // spotLight.color.setHex( 0xffffff );
+                    // spotLight.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
                     backgroundColor = 0x5e5e5e;
-                    spotLight.color.setHex( 0xffffff );
-                    spotLight.intensity = 1;
+                    // spotLight.color.setHex( 0xffffff );
+                    // spotLight.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
                     backgroundColor = 0x92b1d6;
-                    spotLight.color.setHex( 0xc7e7ff );
-                    spotLight.intensity = 3;
+                    // spotLight.color.setHex( 0xc7e7ff );
+                    // spotLight.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
                     backgroundColor = 0xb3ad98;
-                    spotLight1.color.setHex( 0xffe6c4 );
-                    spotLight1.intensity = 2;
+                    // spotLight1.color.setHex( 0xffe6c4 );
+                    // spotLight1.intensity = 2;
                 }
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
-                updateLight();
-                console.log( city.name + " " + city.weather[0].main + " " + spotLight.intensity);            
+                // updateLight();
+                console.log( city.name + " " + city.weather[0].main );            
             }
             else if (controls.getPolarAngle() > 2.2 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > 1 && controls.getAzimuthalAngle() < 3.15){
                 city = BK;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
                     backgroundColor = 0x84959c;
-                    spotLight1.color.setHex( 0xffffff );
-                    spotLight1.intensity = 2;
+                    // spotLight1.color.setHex( 0xffffff );
+                    // spotLight1.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
                     backgroundColor = 0x5e5e5e;
-                    spotLight1.color.setHex( 0xffffff );
-                    spotLight1.intensity = 1;
+                    // spotLight1.color.setHex( 0xffffff );
+                    // spotLight1.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
                     backgroundColor = 0x92b1d6;
-                    spotLight1.color.setHex( 0xc7e7ff );
-                    spotLight1.intensity = 3;
+                    // spotLight1.color.setHex( 0xc7e7ff );
+                    // spotLight1.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
                     backgroundColor = 0xb3ad98;
-                    spotLight1.color.setHex( 0xffe6c4 );
-                    spotLight1.intensity = 2;
+                    // spotLight1.color.setHex( 0xffe6c4 );
+                    // spotLight1.intensity = 2;
                 }
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
-                updateLight();
-                console.log( city.name + " " + city.weather[0].main + " " + spotLight.intensity);            
+                // updateLight();
+                console.log( city.name + " " + city.weather[0].main );            
             }
             else if (controls.getPolarAngle() > 2.2 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > -1 && controls.getAzimuthalAngle() < 1){
                 city = BJ;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
                     backgroundColor = 0x84959c;
-                    spotLight2.color.setHex( 0xffffff );
-                    spotLight2.intensity = 2;
+                    // spotLight2.color.setHex( 0xffffff );
+                    // spotLight2.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
                     backgroundColor = 0x5e5e5e;
-                    spotLight2.color.setHex( 0xffffff );
-                    spotLight2.intensity = 1;
+                    // spotLight2.color.setHex( 0xffffff );
+                    // spotLight2.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
                     backgroundColor = 0x92b1d6;
-                    spotLight2.color.setHex( 0xc7e7ff );
-                    spotLight2.intensity = 3;
+                    // spotLight2.color.setHex( 0xc7e7ff );
+                    // spotLight2.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
                     backgroundColor = 0xb3ad98;
-                    spotLight2.color.setHex( 0xffe6c4 );
-                    spotLight2.intensity = 2;
+                    // spotLight2.color.setHex( 0xffe6c4 );
+                    // spotLight2.intensity = 2;
                 }
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
-                updateLight();
-                console.log( city.name + " " + city.weather[0].main + " " + spotLight.intensity);
+                // updateLight();
+                console.log( city.name + " " + city.weather[0].main );
             }
             else if (controls.getPolarAngle() > 0.6 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > -3.15 && controls.getAzimuthalAngle() < 1){
                 city = LES;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
                     backgroundColor = 0x84959c;
-                    spotLight3.color.setHex( 0xffffff );
-                    spotLight3.intensity = 2;
+                    // spotLight3.color.setHex( 0xffffff );
+                    // spotLight3.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
                     backgroundColor = 0x5e5e5e;
-                    spotLight3.color.setHex( 0xffffff );
-                    spotLight3.intensity = 1;
+                    // spotLight3.color.setHex( 0xffffff );
+                    // spotLight3.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
                     backgroundColor = 0x92b1d6;
-                    spotLight3.color.setHex( 0xc7e7ff );
-                    spotLight3.intensity = 3;
+                    // spotLight3.color.setHex( 0xc7e7ff );
+                    // spotLight3.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
                     backgroundColor = 0xb3ad98;
-                    spotLight3.color.setHex( 0xffe6c4 );
-                    spotLight3.intensity = 2;
+                    // spotLight3.color.setHex( 0xffe6c4 );
+                    // spotLight3.intensity = 2;
                 }
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
-                updateLight();
-                console.log( city.name + " " + city.weather[0].main + " " + spotLight.intensity);
+                // updateLight();
+                console.log( city.name + " " + city.weather[0].main );
             }
         // }
     });
