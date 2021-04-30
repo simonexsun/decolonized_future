@@ -95,7 +95,7 @@ async function main() {
     //         scene.add(object);
     //     });
     // });
-    objLoader.load('src/tetrahedron1.gltf', function (object) {
+    objLoader.load('src/tetrahedron_dark.gltf', function (object) {
         scene.add(object.scene);
         object.animations; // Array<THREE.AnimationClip>
 		object.scene; // THREE.Group
