@@ -87,7 +87,7 @@ async function main() {
     //load 3D model files
     const objLoader = new OBJLoader();
     const mtlLoader = new MTLLoader();
-    mtlLoader.load('src/tetrahedron.mtl', function (materials) {
+    mtlLoader.load('src/tetrahedron.mtl', function (materials) { //exported files and blender file must be stored in "src"
         materials.preload();
         objLoader.setMaterials(materials);
         objLoader.load('src/tetrahedron.obj', function (object) {
