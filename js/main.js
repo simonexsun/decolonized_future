@@ -11,6 +11,7 @@ async function main() {
     const canvas = document.querySelector('#c');
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true , antialias: true });
     let ticker = 0;
+    let rain;
 
     //camera attributes
     const fov = 45;
@@ -119,18 +120,18 @@ async function main() {
 
     // create the particle variables
 	let particleCount = 2000,
-	    particleSystem = new THREE.BufferGeometry();
-    const vertices = [],
-		material = new THREE.PointsMaterial( { color: '#000000', size: 0.2 } );
+	    particleSystem = new THREE.BufferGeometry(),
+        material = new THREE.PointsMaterial( { color: 0x000000, size: 0.2 } );
+    const vertices = [];
 
 	// create the individual particles
 	for(let p = 0; p < particleCount; p++) {
 	
-		// create a particle with random position values, -250 -> 250,
+		// create a particle with random position values, -25 -> 25,
         vertices.push( 
-		    Math.random() * 50 - 25,
-		    Math.random() * 50 - 25,
-		    Math.random() * 50 - 25
+		    Math.random() * 50 - 25,    //x
+		    Math.random() * 50 - 25,    //y
+		    Math.random() * 50 - 25     //z
         );		
 	}
     
@@ -144,24 +145,26 @@ async function main() {
     scene.add(rainDrop);
 
     function rainVariation() {
-
-        let positionAttribute = particleSystem.getAttribute( 'position' );
-        
-        for ( let i = 0; i < positionAttribute.count; i ++ ) {
             // get rainDrop current position
-            let vertex = new THREE.Vector3();
-            vertex.fromBufferAttribute( positionAttribute, i );
+            let positionAttribute = particleSystem.getAttribute( 'position' );
 
-            // change rainDrop y position when it's out of the frame
-            vertex.y -= 0.3;
-            if (vertex.y < -25) {
-                vertex.y = 25;
+            for ( let i = 0; i < positionAttribute.count; i ++ ) {
+                //give rainDrop current position to a vertex
+                let vertex = new THREE.Vector3();
+                vertex.fromBufferAttribute( positionAttribute, i );
+
+                // change rainDrop y position when it's out of the frame
+                vertex.y -= 0.3;
+                if (vertex.y < -25) {
+                    vertex.y = Math.random() * 50 - 25;
+                }
+                // apply new position to rainDrop
+                positionAttribute.setXYZ( i, vertex.x, vertex.y, vertex.z );
             }
-            // apply new position to rainDrop
-            positionAttribute.setXYZ( i, vertex.x, vertex.y, vertex.z );
+        if(rain){ 
+            //update rainDrop 
+            positionAttribute.needsUpdate = true;
         }
-        //update rainDrop 
-        positionAttribute.needsUpdate = true;
     }
 	
     // animation loop
@@ -171,9 +174,8 @@ async function main() {
             camera.aspect = canvas.clientWidth / canvas.clientHeight;
             camera.updateProjectionMatrix();
         }
-
-        rainVariation();
 		
+        rainVariation();
         renderer.render(scene, camera);
 
         // set up the next call
@@ -188,6 +190,8 @@ async function main() {
             if(controls.getPolarAngle() > 0 && controls.getPolarAngle() < 2.2){
                 city = LA;
                 // update weather parameters
+                rain = false;
+                // material.color = '#ffe6b0';
                 if (city.weather[0].main == "Clouds"){
                     backgroundColor = 'hsl(194, 11%, 65%)';
                     spotLight.color.setHex( 0xffffff );
@@ -196,6 +200,7 @@ async function main() {
                     backgroundColor = 'hsl(194, 0%, 37%)';
                     spotLight.color.setHex( 0xffffff );
                     spotLight.intensity = 1;
+                    rain = true;
                 }else if(city.weather[0].main == "Clear"){
                     backgroundColor = 'hsl(194, 69%, 61%)';
                     spotLight.color.setHex( 0xffebc7 );
@@ -208,11 +213,12 @@ async function main() {
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
                 updateLight();
-                console.log( city.name + " is currently" + city.weather[0].main + ", light intensity: " + spotLight.intensity);            
+                console.log( city.name + " is currently " + city.weather[0].main + ", light intensity: " + spotLight.intensity);            
             }
             else if (controls.getPolarAngle() > 2.2 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > 1 && controls.getAzimuthalAngle() < 3.15){
                 city = SZ;
                 // update weather parameters
+                rain = false;
                 if (city.weather[0].main == "Clouds"){
                     backgroundColor = 'hsl(194, 11%, 65%)';
                     spotLight1.color.setHex( 0xffffff );
@@ -221,6 +227,7 @@ async function main() {
                     backgroundColor = 'hsl(194, 0%, 37%)';
                     spotLight1.color.setHex( 0xffffff );
                     spotLight1.intensity = 1;
+                    rain = true;
                 }else if(city.weather[0].main == "Clear"){
                     backgroundColor = 'hsl(194, 69%, 61%)';
                     spotLight1.color.setHex( 0xffebc7 );
@@ -233,11 +240,12 @@ async function main() {
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
                 updateLight();
-                console.log( city.name + " is currently" + city.weather[0].main + ", light intensity: " + spotLight1.intensity);            
+                console.log( city.name + " is currently " + city.weather[0].main + ", light intensity: " + spotLight1.intensity);            
             }
             else if (controls.getPolarAngle() > 2.2 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > -1 && controls.getAzimuthalAngle() < 1){
                 city = BK;
                 // update weather parameters
+                rain = false;
                 if (city.weather[0].main == "Clouds"){
                     backgroundColor = 'hsl(194, 11%, 65%)';
                     spotLight2.color.setHex( 0xffffff );
@@ -246,6 +254,7 @@ async function main() {
                     backgroundColor = 'hsl(194, 0%, 37%)';
                     spotLight2.color.setHex( 0xffffff );
                     spotLight2.intensity = 1;
+                    rain = true;
                 }else if(city.weather[0].main == "Clear"){
                     backgroundColor = 'hsl(194, 69%, 61%)';
                     spotLight2.color.setHex( 0xffebc7 );
@@ -258,11 +267,12 @@ async function main() {
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
                 updateLight();
-                console.log( city.name + " is currently" + city.weather[0].main + ", light intensity: " + spotLight2.intensity);
+                console.log( city.name + " is currently " + city.weather[0].main + ", light intensity: " + spotLight2.intensity + rain);
             }
             else if (controls.getPolarAngle() > 0.6 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > -3.15 && controls.getAzimuthalAngle() < 1){
                 city = LES;
                 // update weather parameters
+                rain = false;
                 if (city.weather[0].main == "Clouds"){
                     backgroundColor = 'hsl(194, 11%, 65%)';
                     spotLight3.color.setHex( 0xffffff );
@@ -271,6 +281,7 @@ async function main() {
                     backgroundColor = 'hsl(194, 0%, 37%)';
                     spotLight3.color.setHex( 0xffffff );
                     spotLight3.intensity = 1;
+                    rain = true;
                 }else if(city.weather[0].main == "Clear"){
                     backgroundColor = 'hsl(194, 69%, 61%)';
                     spotLight3.color.setHex( 0xffebc7 );
@@ -283,7 +294,7 @@ async function main() {
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
                 updateLight();
-                console.log( city.name + " is currently" + city.weather[0].main + ", light intensity: " + spotLight3.intensity);
+                console.log( city.name + " is currently " + city.weather[0].main + ", light intensity: " + spotLight3.intensity);
             }
         // }
     });
