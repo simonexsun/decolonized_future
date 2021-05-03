@@ -46,8 +46,8 @@ async function main() {
 
     //spot light over mountain-LA
     let spotLight = new THREE.SpotLight(lightColor, intensity, distance, angle, penumbra);
-    spotLight.position.set(5, 8, 0);
-    spotLight.target.position.set(0, 5, -1);
+    spotLight.position.set(3, 7, 0);
+    spotLight.target.position.set(-1, -1, -1);
     // spotLight.castShadow = true;
     scene.add(spotLight);
     scene.add(spotLight.target);
@@ -66,7 +66,7 @@ async function main() {
     scene.add(spotLight2);
     scene.add(spotLight2.target);
 
-    //spot light over Water-LES
+    //spot light over water-LES
     let spotLight3 = new THREE.SpotLight(lightColor, intensity, distance, angle, penumbra);
     spotLight3.position.set(-8, -1, -5);
     spotLight3.target.position.set(17, -10, 10);
@@ -74,7 +74,7 @@ async function main() {
     scene.add(spotLight3.target);
 
     //lighting helper
-    // const helper = new THREE.SpotLightHelper(spotLight3);
+    // const helper = new THREE.SpotLightHelper(spotLight);
     // scene.add(helper);
 
     function updateLight() {
