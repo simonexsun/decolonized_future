@@ -180,7 +180,7 @@ async function main() {
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
                 updateLight();
-                console.log( city.name + " " + city.weather[0].main + " " + spotLight.intensity);            
+                console.log( city.name + " " + city.weather[0].main + " " + spotLight1.intensity);            
             }
             else if (controls.getPolarAngle() > 2.2 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > -1 && controls.getAzimuthalAngle() < 1){
                 city = BK;
@@ -205,7 +205,7 @@ async function main() {
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
                 updateLight();
-                console.log( city.name + " " + city.weather[0].main + " " + spotLight.intensity);
+                console.log( city.name + " " + city.weather[0].main + " " + spotLight2.intensity);
             }
             else if (controls.getPolarAngle() > 0.6 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > -3.15 && controls.getAzimuthalAngle() < 1){
                 city = LES;
@@ -230,7 +230,7 @@ async function main() {
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
                 updateLight();
-                console.log( city.name + " " + city.weather[0].main + " " + spotLight.intensity);
+                console.log( city.name + " " + city.weather[0].main + " " + spotLight3.intensity);
             }
         // }
     });
