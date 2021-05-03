@@ -9,7 +9,7 @@ const apiEndpoint = "https://api.openweathermap.org/data/2.5",
 
 async function main() {
     const canvas = document.querySelector('#c');
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true  });
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true , antialias: true });
     let ticker = 0;
 
     //camera attributes
@@ -30,7 +30,6 @@ async function main() {
     let backgroundColor = 'hsl(194, 69%, 61%)'; //sky blue
     camera.lookAt( scene.position );
     scene.background = new THREE.Color(backgroundColor);
-
 
     //hemisphere light attributes
     const skyColor = 0xB1E1FF;  // light blue
@@ -118,18 +117,70 @@ async function main() {
         return needResize;
     }
 
+    // create the particle variables
+	let particleCount = 2000,
+	    particleSystem = new THREE.BufferGeometry();
+    const vertices = [],
+		material = new THREE.PointsMaterial( { color: '#000000', size: 0.2 } );
+
+	// create the individual particles
+	for(let p = 0; p < particleCount; p++) {
+	
+		// create a particle with random position values, -250 -> 250,
+        vertices.push( 
+		    Math.random() * 50 - 25,
+		    Math.random() * 50 - 25,
+		    Math.random() * 50 - 25
+        );		
+	}
+    
+    // add vertices position it to the geometry
+    particleSystem.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+
+    // create the particle system
+	let rainDrop = new THREE.Points( particleSystem, material );
+	
+	// add it to the scene
+    scene.add(rainDrop);
+
+    function rainVariation() {
+
+        let positionAttribute = particleSystem.getAttribute( 'position' );
+        
+        for ( let i = 0; i < positionAttribute.count; i ++ ) {
+            // get rainDrop current position
+            let vertex = new THREE.Vector3();
+            vertex.fromBufferAttribute( positionAttribute, i );
+
+            // change rainDrop y position when it's out of the frame
+            vertex.y -= 0.3;
+            if (vertex.y < -25) {
+                vertex.y = 25;
+            }
+            // apply new position to rainDrop
+            positionAttribute.setXYZ( i, vertex.x, vertex.y, vertex.z );
+        }
+        //update rainDrop 
+        positionAttribute.needsUpdate = true;
+    }
+	
+    // animation loop
     function render() {
         if (resizeRendererToDisplaySize(renderer)) {
             const canvas = renderer.domElement;
             camera.aspect = canvas.clientWidth / canvas.clientHeight;
             camera.updateProjectionMatrix();
         }
+
+        rainVariation();
+		
         renderer.render(scene, camera);
 
+        // set up the next call
         requestAnimationFrame(render);
     }
-        // scene.remove(spotLight);
 
+    //update weathre simulation
     controls.addEventListener('change', () => {
         // ticker++;
         // if (ticker % 30 == 0){
