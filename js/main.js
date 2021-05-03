@@ -339,6 +339,18 @@ async function requstWeathers(){
     ]);
 }
 
+//display about content when icon_button is clicked
+document.getElementById('icon_button').onclick = function displayContent() {
+    var content = document.getElementById("about");
+    if (content.style.opacity == 1) {
+        content.style.display = "none";
+        content.style.opacity = 0;
+    } else {
+        content.style.display = "block";
+        content.style.opacity = 1;
+    }
+}
 
 main();
+
 
