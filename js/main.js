@@ -137,11 +137,12 @@ async function main() {
             if(controls.getPolarAngle() > 0 && controls.getPolarAngle() < 2.2){
                 city = LA;
                 // update weather parameters
-                if (city.weather[0].main == "Clouds"){
+                // check https://openweathermap.org/weather-conditions for full weather conditions
+                if (city.weather[0].main == "Clouds" || city.weather[0].main == "Thunderstorm"){
                     backgroundColor = 'hsl(194, 11%, 65%)';
                     spotLight.color.setHex( 0xffffff );
                     spotLight.intensity = 2;
-                }else if (city.weather[0].main == "Rain"){
+                }else if (city.weather[0].main == "Rain" || city.weather[0].main == "Snow" || city.weather[0].main == "Drizzle"){
                     backgroundColor = 'hsl(194, 0%, 37%)';
                     spotLight.color.setHex( 0xffffff );
                     spotLight.intensity = 1;
@@ -149,7 +150,7 @@ async function main() {
                     backgroundColor = 'hsl(194, 69%, 61%)';
                     spotLight.color.setHex( 0xffebc7 );
                     spotLight.intensity = 3;
-                }else if (city.weather[0].main == "Haze"){
+                }else if (city.weather[0].icon == "50d"){ // Atmosphere including mist, haze, fog, etc.
                     backgroundColor = 'hsl(47, 15%, 65%)';
                     spotLight1.color.setHex( 0xffe6c4 );
                     spotLight1.intensity = 2;
