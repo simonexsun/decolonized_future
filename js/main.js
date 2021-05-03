@@ -252,7 +252,6 @@ async function main() {
                     backgroundColor = 'hsl(194, 11%, 65%)';
                     spotLight2.color.setHex( 0xffffff );
                     spotLight2.intensity = 2;
-                    rain = true;
                 }else if (city.weather[0].main == "Rain"){
                     backgroundColor = 'hsl(194, 0%, 37%)';
                     spotLight2.color.setHex( 0xffffff );
