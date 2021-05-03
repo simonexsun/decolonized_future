@@ -96,9 +96,9 @@ async function main() {
     });
 
     // get weather data
-    let [BJ, BK, LA, LES] = [0,0,0]; //array of weather data from different cities
+    let [SZ, BK, LA, LES] = [0,0,0]; //array of weather data from different cities
     try {
-        [BJ, BK, LA, LES] = await requstWeathers();
+        [SZ, BK, LA, LES] = await requstWeathers();
         console.log("got weather");
     } catch (error) {
         console.log(`got an error: ${error}`);
@@ -159,7 +159,7 @@ async function main() {
                 console.log( city.name + " " + city.weather[0].main + " " + spotLight.intensity);            
             }
             else if (controls.getPolarAngle() > 2.2 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > 1 && controls.getAzimuthalAngle() < 3.15){
-                city = BK;
+                city = SZ;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
                     backgroundColor = 0x84959c;
@@ -184,7 +184,7 @@ async function main() {
                 console.log( city.name + " " + city.weather[0].main + " " + spotLight.intensity);            
             }
             else if (controls.getPolarAngle() > 2.2 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > -1 && controls.getAzimuthalAngle() < 1){
-                city = BJ;
+                city = BK;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
                     backgroundColor = 0x84959c;
@@ -267,7 +267,7 @@ async function apiQuery(path, params) {
 
 async function requstWeathers(){
     return Promise.all([
-        apiQuery("weather", { q: "beijing, cn" }), //BJ
+        apiQuery("weather", { q: "Shenzhen, cn" }), //SZ
         apiQuery("weather", { q: "Brooklyn, ny, us" }), //BK
         apiQuery("weather", { q: "los angeles, ca, us" }), //LA
         apiQuery("weather", { q: "Manhattan, ny, us" }) //LES
