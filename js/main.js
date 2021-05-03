@@ -9,7 +9,7 @@ const apiEndpoint = "https://api.openweathermap.org/data/2.5",
 
 async function main() {
     const canvas = document.querySelector('#c');
-    const renderer = new THREE.WebGLRenderer({ canvas });
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true  });
     let ticker = 0;
 
     //camera attributes
@@ -27,7 +27,7 @@ async function main() {
 
     //background attributes
     const scene = new THREE.Scene();
-    let backgroundColor = 0x58c0e0;
+    let backgroundColor = 'hsl(194, 69%, 61%)'; //sky blue
     camera.lookAt( scene.position );
 
     //hemisphere light attributes
@@ -136,19 +136,19 @@ async function main() {
                 city = LA;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
-                    backgroundColor = 0x84959c;
+                    backgroundColor = 'hsl(194, 11%, 56%)';
                     spotLight.color.setHex( 0xffffff );
                     spotLight.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
-                    backgroundColor = 0x5e5e5e;
+                    backgroundColor = 'hsl(194, 0%, 37%)';
                     spotLight.color.setHex( 0xffffff );
                     spotLight.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
-                    backgroundColor = 0x92b1d6;
+                    backgroundColor = 'hsl(194, 45%, 71%)';
                     spotLight.color.setHex( 0xc7e7ff );
                     spotLight.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
-                    backgroundColor = 0xb3ad98;
+                    backgroundColor = 'hsl(47, 15%, 65%)';
                     spotLight1.color.setHex( 0xffe6c4 );
                     spotLight1.intensity = 2;
                 }
@@ -161,19 +161,19 @@ async function main() {
                 city = SZ;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
-                    backgroundColor = 0x84959c;
+                    backgroundColor = 'hsl(194, 11%, 56%)';
                     spotLight1.color.setHex( 0xffffff );
                     spotLight1.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
-                    backgroundColor = 0x5e5e5e;
+                    backgroundColor = 'hsl(194, 0%, 37%)';
                     spotLight1.color.setHex( 0xffffff );
                     spotLight1.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
-                    backgroundColor = 0x92b1d6;
+                    backgroundColor = 'hsl(194, 45%, 71%)';
                     spotLight1.color.setHex( 0xc7e7ff );
                     spotLight1.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
-                    backgroundColor = 0xb3ad98;
+                    backgroundColor = 'hsl(47, 15%, 65%)';
                     spotLight1.color.setHex( 0xffe6c4 );
                     spotLight1.intensity = 2;
                 }
@@ -186,19 +186,19 @@ async function main() {
                 city = BK;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
-                    backgroundColor = 0x84959c;
+                    backgroundColor = 'hsl(194, 11%, 56%)';
                     spotLight2.color.setHex( 0xffffff );
                     spotLight2.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
-                    backgroundColor = 0x5e5e5e;
+                    backgroundColor = 'hsl(194, 0%, 37%)';
                     spotLight2.color.setHex( 0xffffff );
                     spotLight2.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
-                    backgroundColor = 0x92b1d6;
+                    backgroundColor = 'hsl(194, 45%, 71%)';
                     spotLight2.color.setHex( 0xc7e7ff );
                     spotLight2.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
-                    backgroundColor = 0xb3ad98;
+                    backgroundColor = 'hsl(47, 15%, 65%)';
                     spotLight2.color.setHex( 0xffe6c4 );
                     spotLight2.intensity = 2;
                 }
@@ -211,19 +211,19 @@ async function main() {
                 city = LES;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
-                    backgroundColor = 0x84959c;
+                    backgroundColor = 'hsl(194, 11%, 56%)';
                     spotLight3.color.setHex( 0xffffff );
                     spotLight3.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
-                    backgroundColor = 0x5e5e5e;
+                    backgroundColor = 'hsl(194, 0%, 37%)';
                     spotLight3.color.setHex( 0xffffff );
                     spotLight3.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
-                    backgroundColor = 0x92b1d6;
+                    backgroundColor = 'hsl(194, 45%, 71%)';
                     spotLight3.color.setHex( 0xc7e7ff );
                     spotLight3.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
-                    backgroundColor = 0xb3ad98;
+                    backgroundColor = 'hsl(47, 15%, 65%)';
                     spotLight3.color.setHex( 0xffe6c4 );
                     spotLight3.intensity = 2;
                 }
