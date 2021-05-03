@@ -34,7 +34,7 @@ async function main() {
     //hemisphere light attributes
     const skyColor = 0xB1E1FF;  // light blue
     const groundColor = 0xB97A20;  // brownish orange
-    const hemisphereIntensity = 0;
+    const hemisphereIntensity = 1;
     const hemisphereLight = new THREE.HemisphereLight(skyColor, groundColor, hemisphereIntensity);
     scene.add(hemisphereLight);
 
@@ -95,7 +95,7 @@ async function main() {
     //         scene.add(object);
     //     });
     // });
-    objLoader.load('src/tetrahedron_dark.gltf', function (object) {
+    objLoader.load('src/tetrahedron_newmodel_light_nocam.gltf', function (object) {
         scene.add(object.scene);
         object.animations; // Array<THREE.AnimationClip>
 		object.scene; // THREE.Group
