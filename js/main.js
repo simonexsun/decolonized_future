@@ -46,31 +46,30 @@ async function main() {
 
     //spot light over mountain-LA
     let spotLight = new THREE.SpotLight(lightColor, intensity, distance, angle, penumbra);
-    // let spotLight = new THREE.SpotLight(lightColor, intensity);
     spotLight.position.set(5, 8, 0);
     spotLight.target.position.set(0, 5, -1);
     // spotLight.castShadow = true;
     scene.add(spotLight);
     scene.add(spotLight.target);
 
-    //spot light over farm-BK
+    //spot light over farm-SZ
     let spotLight1 = new THREE.SpotLight(lightColor, intensity, distance, angle, penumbra);
-    spotLight1.position.set(5, -6, 0);
-    spotLight1.target.position.set(1, 1, -2);
+    spotLight1.position.set(2, -13, 0);
+    spotLight1.target.position.set(2, -1, 0);
     scene.add(spotLight1);
     scene.add(spotLight1.target);
 
-    //spot light over city-BJ
+    //spot light over city-BK
     let spotLight2 = new THREE.SpotLight(lightColor, intensity, distance, angle, penumbra);
     spotLight2.position.set(-4, -6, 7);
     spotLight2.target.position.set(2, 1, -4);
     scene.add(spotLight2);
     scene.add(spotLight2.target);
 
-    //spot light over ?-LES
-    let spotLight3 = new THREE.SpotLight(lightColor, 3, distance, angle, penumbra);
-    spotLight3.position.set(-10, -5, -3);
-    spotLight3.target.position.set(15, 10, 10);
+    //spot light over Water-LES
+    let spotLight3 = new THREE.SpotLight(lightColor, intensity, distance, angle, penumbra);
+    spotLight3.position.set(-8, -1, -5);
+    spotLight3.target.position.set(17, -10, 10);
     scene.add(spotLight3);
     scene.add(spotLight3.target);
 
