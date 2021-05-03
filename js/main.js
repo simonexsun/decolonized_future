@@ -29,6 +29,8 @@ async function main() {
     const scene = new THREE.Scene();
     let backgroundColor = 'hsl(194, 69%, 61%)'; //sky blue
     camera.lookAt( scene.position );
+    scene.background = new THREE.Color(backgroundColor);
+
 
     //hemisphere light attributes
     const skyColor = 0xB1E1FF;  // light blue
@@ -136,7 +138,7 @@ async function main() {
                 city = LA;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
-                    backgroundColor = 'hsl(194, 11%, 56%)';
+                    backgroundColor = 'hsl(194, 11%, 65%)';
                     spotLight.color.setHex( 0xffffff );
                     spotLight.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
@@ -144,8 +146,8 @@ async function main() {
                     spotLight.color.setHex( 0xffffff );
                     spotLight.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
-                    backgroundColor = 'hsl(194, 45%, 71%)';
-                    spotLight.color.setHex( 0xc7e7ff );
+                    backgroundColor = 'hsl(194, 69%, 61%)';
+                    spotLight.color.setHex( 0xffebc7 );
                     spotLight.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
                     backgroundColor = 'hsl(47, 15%, 65%)';
@@ -155,13 +157,13 @@ async function main() {
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
                 updateLight();
-                console.log( city.name + " " + city.weather[0].main + " " + spotLight.intensity);            
+                console.log( city.name + " is currently" + city.weather[0].main + ", light intensity: " + spotLight.intensity);            
             }
             else if (controls.getPolarAngle() > 2.2 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > 1 && controls.getAzimuthalAngle() < 3.15){
                 city = SZ;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
-                    backgroundColor = 'hsl(194, 11%, 56%)';
+                    backgroundColor = 'hsl(194, 11%, 65%)';
                     spotLight1.color.setHex( 0xffffff );
                     spotLight1.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
@@ -169,8 +171,8 @@ async function main() {
                     spotLight1.color.setHex( 0xffffff );
                     spotLight1.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
-                    backgroundColor = 'hsl(194, 45%, 71%)';
-                    spotLight1.color.setHex( 0xc7e7ff );
+                    backgroundColor = 'hsl(194, 69%, 61%)';
+                    spotLight1.color.setHex( 0xffebc7 );
                     spotLight1.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
                     backgroundColor = 'hsl(47, 15%, 65%)';
@@ -180,13 +182,13 @@ async function main() {
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
                 updateLight();
-                console.log( city.name + " " + city.weather[0].main + " " + spotLight1.intensity);            
+                console.log( city.name + " is currently" + city.weather[0].main + ", light intensity: " + spotLight1.intensity);            
             }
             else if (controls.getPolarAngle() > 2.2 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > -1 && controls.getAzimuthalAngle() < 1){
                 city = BK;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
-                    backgroundColor = 'hsl(194, 11%, 56%)';
+                    backgroundColor = 'hsl(194, 11%, 65%)';
                     spotLight2.color.setHex( 0xffffff );
                     spotLight2.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
@@ -194,8 +196,8 @@ async function main() {
                     spotLight2.color.setHex( 0xffffff );
                     spotLight2.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
-                    backgroundColor = 'hsl(194, 45%, 71%)';
-                    spotLight2.color.setHex( 0xc7e7ff );
+                    backgroundColor = 'hsl(194, 69%, 61%)';
+                    spotLight2.color.setHex( 0xffebc7 );
                     spotLight2.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
                     backgroundColor = 'hsl(47, 15%, 65%)';
@@ -205,13 +207,13 @@ async function main() {
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
                 updateLight();
-                console.log( city.name + " " + city.weather[0].main + " " + spotLight2.intensity);
+                console.log( city.name + " is currently" + city.weather[0].main + ", light intensity: " + spotLight2.intensity);
             }
             else if (controls.getPolarAngle() > 0.6 && controls.getPolarAngle() < 3.15 && controls.getAzimuthalAngle() > -3.15 && controls.getAzimuthalAngle() < 1){
                 city = LES;
                 // update weather parameters
                 if (city.weather[0].main == "Clouds"){
-                    backgroundColor = 'hsl(194, 11%, 56%)';
+                    backgroundColor = 'hsl(194, 11%, 65%)';
                     spotLight3.color.setHex( 0xffffff );
                     spotLight3.intensity = 2;
                 }else if (city.weather[0].main == "Rain"){
@@ -219,8 +221,8 @@ async function main() {
                     spotLight3.color.setHex( 0xffffff );
                     spotLight3.intensity = 1;
                 }else if(city.weather[0].main == "Clear"){
-                    backgroundColor = 'hsl(194, 45%, 71%)';
-                    spotLight3.color.setHex( 0xc7e7ff );
+                    backgroundColor = 'hsl(194, 69%, 61%)';
+                    spotLight3.color.setHex( 0xffebc7 );
                     spotLight3.intensity = 3;
                 }else if (city.weather[0].main == "Haze"){
                     backgroundColor = 'hsl(47, 15%, 65%)';
@@ -230,7 +232,7 @@ async function main() {
                 //update weather interface
                 scene.background = new THREE.Color(backgroundColor);
                 updateLight();
-                console.log( city.name + " " + city.weather[0].main + " " + spotLight3.intensity);
+                console.log( city.name + " is currently" + city.weather[0].main + ", light intensity: " + spotLight3.intensity);
             }
         // }
     });
