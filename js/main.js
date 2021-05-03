@@ -23,8 +23,9 @@ async function main() {
 
     //control attributes
     const controls = new OrbitControls(camera, canvas);
-    // controls.target.set(0, 3, 0);
-    // controls.update();
+    controls.update();
+	controls.enablePan = false;
+	controls.enableDamping = true;
 
     //background attributes
     const scene = new THREE.Scene();
@@ -176,6 +177,7 @@ async function main() {
         }
 		
         rainVariation();
+        controls.update();
         renderer.render(scene, camera);
 
         // set up the next call
@@ -249,6 +251,7 @@ async function main() {
                     backgroundColor = 'hsl(194, 11%, 65%)';
                     spotLight2.color.setHex( 0xffffff );
                     spotLight2.intensity = 2;
+                    rain = true;
                 }else if (city.weather[0].main == "Rain"){
                     backgroundColor = 'hsl(194, 0%, 37%)';
                     spotLight2.color.setHex( 0xffffff );
