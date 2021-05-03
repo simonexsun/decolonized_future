@@ -193,6 +193,7 @@ async function main() {
                 city = LA;
                 // update weather parameters
                 // check https://openweathermap.org/weather-conditions for full weather conditions
+                rain = false;
                 if (city.weather[0].main == "Clouds" || city.weather[0].main == "Thunderstorm"){
                     backgroundColor = 'hsl(194, 11%, 65%)';
                     spotLight.color.setHex( 0xffffff );
